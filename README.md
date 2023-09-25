@@ -6,7 +6,7 @@ Ensure you have CocoaPods and Python installed on your system.
 
 # Usage
 To analyze the pods inside your project:
-1. Clone this repository inside your project folder
+1. Clone this repository inside your project folder or simply download the podsAnalyzer.py file
 2. Run the script using the command: **python podsAnalyzer.py**.
 3. The gathered information for each CocoaPod will be saved to a Plist file.
 
