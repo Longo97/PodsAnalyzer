@@ -35,7 +35,7 @@ for subfolder in subfolders:
             info_list.append(info)
 
         except json.JSONDecodeError as e:
-            print("Error during JSON analysis:", str(e))
+            print("Cannot be analyzed:", str(subfolder))
     else:
         print("Error during command execution:", str(subfolder))
 
