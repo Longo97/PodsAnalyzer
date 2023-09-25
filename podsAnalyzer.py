@@ -15,8 +15,9 @@ subfolders = [f.name for f in os.scandir(base_folder + "/Pods") if f.is_dir()]
 # # Iterate over each subfolder and execute the pod spec command
 for subfolder in subfolders:
 
-    command = f"pod spec cat {subfolder}"  # Sostituisci con il tuo comando
+    command = f"pod spec cat {subfolder}"
     result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    print("analyzing..", str(subfolder))
 
     # Check the result
     if result.returncode == 0:
@@ -26,9 +27,11 @@ for subfolder in subfolders:
             info = {
                 "name": json_output["name"],
                 "version": json_output["version"],
-                "license": json_output["license"],
-                "git_source": json_output["source"]["git"]
+                "license": json_output["license"]
             }
+
+            git_source = json_output["source"].get("git", "N/A")
+            info["git_source"] = git_source
             info_list.append(info)
 
         except json.JSONDecodeError as e:
@@ -37,7 +40,7 @@ for subfolder in subfolders:
         print("Error during command execution:", str(subfolder))
 
 # plist file creation
-plist_file_path = "info.plist"
+plist_file_path = "info_pods.plist"
 with open(plist_file_path, 'wb') as plist_file:
     plistlib.dump(info_list, plist_file)
 
