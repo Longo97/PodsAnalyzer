@@ -3,14 +3,14 @@ import subprocess
 import plistlib
 import json
 
-# Function to extract the pod name and version from the line
+# Extract the pod name and version from the line
 def extract_pod_info(line):
     match = re.match(r'^\s*-\s+"?([^/\s]+)\s+\(([^)]+)\)', line)
     if match:
         return match.group(1), match.group(2)
     return None, None
 
-# Function to get license and git source information for the pod
+# Get license and git source information for the pod
 def get_pod_info(pod_name):
     try:
         # Run the 'pod spec cat' command to get pod information
@@ -26,7 +26,6 @@ def get_pod_info(pod_name):
     except Exception as e:
         return 'Error retrieving information', str(e)
 
-# Path to the Podfile.lock file
 file_path = 'Podfile.lock'
 
 # Dictionary to store pod names, versions, license, and git source information
@@ -35,7 +34,6 @@ pod_info_dict = {}
 # Set to keep track of processed pod names
 processed_pods = set()
 
-# Read the file and extract information
 with open(file_path, 'r') as file:
     lines = file.readlines()
 
@@ -56,7 +54,6 @@ with open(file_path, 'r') as file:
             # Add the pod name to the set of processed pods
             processed_pods.add(pod_name)
 
-# Write the information to a plist file
 output_plist_path = 'pod_info.plist'
 with open(output_plist_path, 'wb') as output_file:
     plistlib.dump(pod_info_dict, output_file)
